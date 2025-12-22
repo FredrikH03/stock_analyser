@@ -14,6 +14,7 @@
           gcc
           gnumake
           zig
+          boost
         ];
 
         shellHook = ''
