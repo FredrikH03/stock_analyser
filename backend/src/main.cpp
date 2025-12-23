@@ -33,6 +33,8 @@ void handle_request(const http::request<http::string_body>& req, http::response<
       json_response["message"] = "Hello, World!";
       json_response["status"] = "success";
 
+      std::cout << "connection to '127.0.0.1:8080/hello' received\n";
+
       res.result(http::status::ok);
       res.set(http::field::content_type, "application/json");
       res.body() = json::serialize(json_response);
@@ -42,6 +44,19 @@ void handle_request(const http::request<http::string_body>& req, http::response<
       json_response["message"] = "World, Hello!";
       json_response["status"] = "success";
 
+      std::cout << "connection to '127.0.0.1:8080/world' received\n";
+
+      res.result(http::status::ok);
+      res.set(http::field::content_type, "application/json");
+      res.body() = json::serialize(json_response);
+      res.prepare_payload();
+    } else if (path == "/test") {
+      json::object json_response;
+      json_response["params"] = "test";
+      json_response["status"] = "success";
+
+      std::cout << "connection to '127.0.0.1:8080/test' received with params; " << params << '\n';
+      
       res.result(http::status::ok);
       res.set(http::field::content_type, "application/json");
       res.body() = json::serialize(json_response);
