@@ -15,10 +15,12 @@
           gnumake
           zig
           boost
+          newman
         ];
 
         shellHook = ''
           echo "the codening can commence"
+          export PS1="\e[0;32m[nix-dev \w]\$ \e[0m"
         '';
       };
     };
