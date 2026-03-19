@@ -61,7 +61,26 @@ void handle_request(const http::request<http::string_body>& req, http::response<
       res.set(http::field::content_type, "application/json");
       res.body() = json::serialize(json_response);
       res.prepare_payload();
-    } else {
+    } else if (path == "/api/stocks"){
+      json::object json_response;
+      json_response["status"] = "200";
+
+
+      url_view u( "?Firstname=John&Last=Doe&last=test" );
+      
+      test = u.params().find( "last" ) != u.params().find( "last", ignore_case ) ;
+
+      // string ticker;
+      // ticker == 
+      // std::cout << "connection to '127.0.0.1:8080/api/stocks' received with params; " << params << '\n';
+      std::cout << "connection to '127.0.0.1:8080/api/stocks' received, ; " << test << '\n';
+
+      res.result(http::status::ok);
+      res.set(http::field::content_type, "application/json");
+      res.body() = json::serialize(json_response);
+      res.prepare_payload();
+    }
+    else {
       res.result(http::status::not_found);
       res.set(http::field::content_type, "text/plain");
       res.body() = "Not Found";
@@ -73,7 +92,19 @@ void handle_request(const http::request<http::string_body>& req, http::response<
     res.body() = "Method Not Allowed";
     res.prepare_payload();
   }
+
+  if(req.method() == http::verb::post){
+    url_view parsed_url(req.target());
+    auto params = parsed_url.params();
+    auto path = parsed_url.path();
+
+    if(path == "/post/test"){
+
+
+    }
+  }
 }
+
 
 // session handles communication with a single client
 void session(tcp::socket socket) {
